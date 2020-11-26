@@ -9,10 +9,12 @@
 int main() {
 	int x = 0;
 	struct Stack stk;
-	stackConstruct(&stk, 100);
-
-	x = stackPop(&stk);
-	printf("x=%d\n", x);
+	stackConstruct(&stk, 1000);
+	printf("stk_size: %d\n", stk.elemCount);
+	for(int i = 0; i < stk.elemCount; i++) {
+		x = stackPop(&stk);
+		//printf("x=%d\n", x);
+	}
 
 	stackDestruct(&stk);
 	return 0;

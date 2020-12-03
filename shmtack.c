@@ -10,7 +10,7 @@ void stackConstruct(struct Stack* stk, unsigned int maxELements) {
     stk->maxElems = maxELements;
 
     fd = open(KEYPATH, O_CREAT);
-    key_t key = ftok(KEYPATH, 0);
+    key_t key = ftok(KEYPATH, 1);
     id = shmget(key, sizeof(ElemT) * maxELements + sizeof(int), IPC_CREAT | PERMISSIONS);
     if (id == -1) {
     	perror("");
@@ -62,6 +62,9 @@ void stackPush(struct Stack* stk, ElemT newElem) {
         printf("Error opping semaphores\n");
         exit(-1);
     }
+
+    stk->elemCount = *((int*) stk->shm); 
+
     if (stk->elemCount >= stk->maxElems) {
         printf("Too many elements in the stack\n");
         return ;
@@ -92,6 +95,9 @@ int stackPop(struct Stack* stk) {
         printf("Error opping semaphores\n");
         exit(-1);
     }
+
+
+    stk->elemCount = *((int*) stk->shm);
 
     if (stk->elemCount <= 0) {
         printf("No elements in the stack\n");

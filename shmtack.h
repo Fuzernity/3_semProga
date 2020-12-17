@@ -15,6 +15,8 @@
 #define PERMISSIONS 0666
 #define KEYPATH "/tmp/filekey"
 
+#define ID 5
+
 typedef int ElemT;
 
 struct Stack {

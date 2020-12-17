@@ -7,20 +7,13 @@
 #include <sys/shm.h>
 #include "shmtack.h"
 
-void dopush(int i) {
-	struct Stack stk;
-	stackConstruct(&stk, 1000);
-
-	stackPush(&stk, i);
-}
-
 int main() {
-	for (int i = 0; i < 333; i++) {
-		if (fork() == 0) {
-			//printf("%d\n", i);
-			dopush(i);
-			exit(0);
-		}
+	struct Stack stk;
+	stackConstruct(&stk, 11);
+
+	for (int i = 0; i < 10; ++i) {
+		stackPush(&stk, i);
 	}
+
 	return 0;
 }

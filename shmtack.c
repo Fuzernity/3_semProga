@@ -10,7 +10,7 @@ void stackConstruct(struct Stack* stk, unsigned int maxELements) {
     stk->maxElems = maxELements;
 
     fd = open(KEYPATH, O_CREAT);
-    key_t key = ftok(KEYPATH, 1);
+    key_t key = ftok(KEYPATH, ID);
     id = shmget(key, sizeof(ElemT) * maxELements + sizeof(int), IPC_CREAT | PERMISSIONS);
     if (id == -1) {
     	perror("");
@@ -70,7 +70,8 @@ void stackPush(struct Stack* stk, ElemT newElem) {
         return ;
     }
 
-    stk->elems[stk->elemCount++] = newElem;
+    stk->elems[stk->elemCount] = newElem;
+    stk->elemCount++;
     *((int*) stk->shm) = stk->elemCount;
 
     semops.sem_num = 1;
@@ -104,7 +105,8 @@ int stackPop(struct Stack* stk) {
         return -1;
     }
 
-    ElemT result = stk->elems[stk->elemCount-- - 1];
+    ElemT result = stk->elems[stk->elemCount - 1];
+    stk->elemCount--;
     *((int*) stk->shm) = stk->elemCount;
 
     semops.sem_num = 1;

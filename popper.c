@@ -8,12 +8,14 @@
 
 int main() {
 	int x = 0;
+	int size = 0;
 	struct Stack stk;
-	stackConstruct(&stk, 1000);
-	printf("stk_size: %d\n", stk.elemCount);
-	for(int i = 0; i < stk.elemCount; i++) {
+	stackConstruct(&stk, 11);
+	size = stk.elemCount;
+	for(int i = 0; i < size; i++) {
+		//printf("stk_size: %d\n", stk.elemCount);
 		x = stackPop(&stk);
-		//printf("x=%d\n", x);
+		printf("x=%d\n", x);
 	}
 
 	stackDestruct(&stk);
